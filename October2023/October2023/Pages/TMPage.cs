@@ -1,4 +1,5 @@
-﻿using October2023.Utilities;
+﻿using NUnit.Framework;
+using October2023.Utilities;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
@@ -40,22 +41,32 @@ namespace October2023.Pages
             // Click on save button
             IWebElement saveButton = driver.FindElement(By.Id("SaveButton"));
             saveButton.Click();
-            Thread.Sleep(4000);
+            //Thread.Sleep(4000);
 
             // Check if new record has been created successfully
-            IWebElement goToLastPageButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
-            goToLastPageButton.Click();
+            try
+            {
+                IWebElement goToLastPageButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
+                goToLastPageButton.Click();
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail("Go to last page button hasn't been found.", ex.Message);
+            }
+            
 
             IWebElement newCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
 
-            if (newCode.Text == "October2023")
-            {
-                Console.WriteLine("New record has been created successfully.");
-            }
-            else
-            {
-                Console.WriteLine("Record has not been created.");
-            }
+            Assert.That(newCode.Text == "October2023", "Record has not been created.");
+
+            //if (newCode.Text == "October2023")
+            //{
+            //    Assert.Pass("New record has been created successfully.");
+            //}
+            //else
+            //{
+            //    Assert.Fail("Record has not been created.");
+            //}
 
         }
 
