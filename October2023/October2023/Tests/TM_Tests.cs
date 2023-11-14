@@ -11,6 +11,7 @@ using October2023.Utilities;
 
 namespace October2023.Tests
 {
+    [Parallelizable]
     [TestFixture]
     public class TM_Tests : CommonDriver
     {
@@ -29,7 +30,7 @@ namespace October2023.Tests
             homePageObj.GoToTMPage(driver);
         }
 
-        [Test]
+        [Test, Order (1), Description ("This test is creating a new Time record")]
         public void CreateTime_Test()
         {
             // TM Page object initialization and definition
@@ -37,7 +38,7 @@ namespace October2023.Tests
             tmPageObject.Create_TimeRecord(driver);
         }
 
-        [Test]
+        [Test, Order (2), Description ("This test is editing an existing Time record")]
         public void EditTime_Test()
         {
             TMPage tmPageObject = new TMPage();
@@ -45,7 +46,7 @@ namespace October2023.Tests
             tmPageObject.Edit_TimeRecord(driver);
         }
 
-        [Test]
+        [Test, Order (3), Description ("This test is deleting an existing Time record")]
         public void DeleteTime_Test() 
         {
             TMPage tmPageObject = new TMPage();
