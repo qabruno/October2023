@@ -52,20 +52,29 @@ namespace October2023.Pages
             catch (Exception ex)
             {
                 Assert.Fail("Go to last page button hasn't been found.", ex.Message);
-            }
-            
-
-            IWebElement newCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
-            IWebElement newTypeCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[2]"));
-            IWebElement newDescription = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]"));
-            IWebElement newPrice = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[4]"));
-
-            Assert.That(newCode.Text == "October2023", "New code and expected code do not match.");
-            Assert.That(newTypeCode.Text == "T", "New TypeCode and expected TypeCode do not match.");
-            Assert.That(newDescription.Text == "October2023", "New description and expected description do not match.");
-            Assert.That(newPrice.Text == "$12.00", "New price and expected price do not match.");
-
+            }              
+                        
         }
+
+        public string GetCode(IWebDriver driver)
+        {
+            IWebElement newCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+            return newCode.Text;
+        }
+
+        public string GetDescription(IWebDriver driver) 
+        {
+            IWebElement newDescription = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]"));
+            return newDescription.Text;
+        }
+
+        public string GetPrice(IWebDriver driver) 
+        {
+            IWebElement newPrice = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[4]"));
+            return newPrice.Text;
+        }
+
+
         public void Edit_TimeRecord(IWebDriver driver)
         {
             Thread.Sleep(3000);
