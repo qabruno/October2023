@@ -28,7 +28,7 @@ namespace October2023.Pages
 
             // Enter code into code textbox
             IWebElement codeTextbox = driver.FindElement(By.Id("Code"));
-            codeTextbox.SendKeys("October2023");
+            codeTextbox.SendKeys("OCtober2023");
 
             // Enter description into description textbox
             IWebElement descriptionTextbox = driver.FindElement(By.Id("Description"));
@@ -39,7 +39,7 @@ namespace October2023.Pages
             priceTextbox.SendKeys("12");
 
             // Click on save button
-            IWebElement saveButton = driver.FindElement(By.Id("SaveButton"));
+            IWebElement saveButton = driver.FindElement(By.CssSelector("[Value='Save']"));
             saveButton.Click();
             Thread.Sleep(4000);
 
@@ -75,7 +75,7 @@ namespace October2023.Pages
         }
 
 
-        public void Edit_TimeRecord(IWebDriver driver)
+        public void Edit_TimeRecord(IWebDriver driver, string code, string description, string price)
         {
             Thread.Sleep(3000);
             IWebElement goToLastPageButton1 = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
@@ -101,13 +101,13 @@ namespace October2023.Pages
             //Edit code in the code text box
             IWebElement editCodeTextbox = driver.FindElement(By.Id("Code"));
             editCodeTextbox.Clear();
-            editCodeTextbox.SendKeys("tanuEdit");
+            editCodeTextbox.SendKeys(code);
 
 
             //Edit discription in discription text box
             IWebElement editDescriptionTextbox = driver.FindElement(By.Id("Description"));
             editDescriptionTextbox.Clear();
-            editDescriptionTextbox.SendKeys("testEditDis");
+            editDescriptionTextbox.SendKeys(description);
 
             //Edit price per unit in price per unit textbox
 
@@ -115,7 +115,7 @@ namespace October2023.Pages
 
             IWebElement editPriceTextbox = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[4]/div/span[1]/span/input[1]"));
             //editPriceTextbox.Clear();
-            editPriceTextbox.SendKeys("200");
+            editPriceTextbox.SendKeys(price);
 
             //Thread.Sleep(6000);
 
@@ -134,12 +134,24 @@ namespace October2023.Pages
 
             Wait.WaitToExist(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]", 10);
 
-            IWebElement newEditCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+           
+        }
 
-            Assert.That(newEditCode.Text == "tanuEdit", "The record edit function is unsucussfull");
+        public string EditedCode(IWebDriver driver)
+        {
+            IWebElement editedCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+            return editedCode.Text;
+        }
+        public string EditedDescription(IWebDriver driver)
+        {
+            IWebElement editedDescription = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]"));
+            return editedDescription.Text;
+        }
 
-     
-
+        public string EditedPrice(IWebDriver driver)
+        {
+            IWebElement editedPrice = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[4]"));
+            return editedPrice.Text;
         }
 
         public void Delete_TimeRecord(IWebDriver driver)
@@ -171,7 +183,6 @@ namespace October2023.Pages
             IWebElement deletedCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
 
             Assert.That(deletedCode.Text != "tanuEdit", "Record has not been deleted.");
-
 
         }
     }

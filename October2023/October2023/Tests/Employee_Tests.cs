@@ -14,6 +14,10 @@ namespace October2023.Tests
     [TestFixture]
     public class Employee_Tests : CommonDriver
     {
+        LoginPage loginPageObj = new LoginPage();
+        HomePage homePageObj = new HomePage();
+        EmployeesPage employeesPageObj = new EmployeesPage();
+
         [SetUp]
         public void EmployeeSetUp()
         {
@@ -21,32 +25,30 @@ namespace October2023.Tests
             driver = new ChromeDriver();
 
             // Login page object initialization and definition
-            LoginPage loginPageObj = new LoginPage();
+            
             loginPageObj.LoginActions(driver);
 
             // Home page object initialization and deifinition
-            HomePage homePageObj = new HomePage();
+            
             homePageObj.GoToEmployeePage(driver);
         }
 
         [Test]
         public void Create_Employee_Test()
         {
-            EmployeesPage employeesPageObj = new EmployeesPage();
+            
             employeesPageObj.Create_Employee();
         }
 
         [Test]
         public void Edit_Employee_Test()
         {
-            EmployeesPage employeesPageObj = new EmployeesPage();
             employeesPageObj.Edit_Employee();
         }
 
         [Test]
         public void Delete_Employee_Test()
         {
-            EmployeesPage employeesPageObj = new EmployeesPage();
             employeesPageObj.Delete_Employee();
         }
 

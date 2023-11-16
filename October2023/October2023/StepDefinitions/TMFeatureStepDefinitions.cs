@@ -10,6 +10,10 @@ namespace October2023.StepDefinitions
     [Binding]
     public class TMFeatureStepDefinitions : CommonDriver
     {
+        TMPage tmPageObject = new TMPage();
+        HomePage homePageObj = new HomePage();
+        LoginPage loginPageObj = new LoginPage();
+
         [Given(@"I logged into TurnUp portal successfully")]
         public void GivenILoggedIntoTurnUpPortalSuccessfully()
         {
@@ -17,7 +21,7 @@ namespace October2023.StepDefinitions
             driver = new ChromeDriver();
 
             // Login page object initialization and definition
-            LoginPage loginPageObj = new LoginPage();
+            
             loginPageObj.LoginActions(driver);
         }
 
@@ -25,22 +29,22 @@ namespace October2023.StepDefinitions
         public void WhenINavigateToTimeAndMaterialPage()
         {
             // Home page object initialization and deifinition
-            HomePage homePageObj = new HomePage();
+            
             homePageObj.GoToTMPage(driver);
         }
 
         [When(@"I create a new time record")]
         public void WhenICreateANewTimeRecord()
         {
-            // TM Page object initialization and definition
-            TMPage tmPageObject = new TMPage();
+            
+            
             tmPageObject.Create_TimeRecord(driver);
         }
 
         [Then(@"the record should be created successfully")]
         public void ThenTheRecordShouldBeCreatedSuccessfully()
         {
-            TMPage tmPageObject = new TMPage();
+            
 
             string newCode = tmPageObject.GetCode(driver);
             string newDescription = tmPageObject.GetDescription(driver);
@@ -50,5 +54,25 @@ namespace October2023.StepDefinitions
             Assert.That(newDescription == "October2023", "New description and expected description do not match.");
             Assert.That(newPrice == "$12.00", "New price and expected price do not match.");
         }
+
+        [When(@"I update the '([^']*)', '([^']*)' and '([^']*)' of an existing time record")]
+        public void WhenIUpdateTheAndOfAnExistingTimeRecord(string code, string description, string price)
+        {
+            tmPageObject.Edit_TimeRecord(driver, code, description, price);
+        }
+
+        [Then(@"the record should have an updated '([^']*)', '([^']*)' and '([^']*)'")]
+        public void ThenTheRecordShouldHaveAnUpdatedAnd(string code, string description, string price)
+        {
+            string editedCode = tmPageObject.EditedCode(driver);
+            string editedDescription = tmPageObject.EditedDescription(driver);
+            string editedPrice = tmPageObject.EditedPrice(driver);
+
+            Assert.That(editedCode, Is.EqualTo(code), "Actual and expected Code do not match.");
+            Assert.That(editedDescription, Is.EqualTo(description), "Actual and expected Description do not match.");
+            Assert.That(editedPrice, Is.EqualTo(price), " Actual and expected Price do not match.");
+        }
+
+
     }
 }

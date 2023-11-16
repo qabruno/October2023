@@ -15,6 +15,10 @@ namespace October2023.Tests
     [TestFixture]
     public class TM_Tests : CommonDriver
     {
+        LoginPage loginPageObj = new LoginPage();
+        HomePage homePageObj = new HomePage();
+        TMPage tmPageObject = new TMPage();
+
         [SetUp]
         public void TimeSetUp()
         {
@@ -22,11 +26,11 @@ namespace October2023.Tests
             driver = new ChromeDriver();
 
             // Login page object initialization and definition
-            LoginPage loginPageObj = new LoginPage();
+            
             loginPageObj.LoginActions(driver);
 
             // Home page object initialization and deifinition
-            HomePage homePageObj = new HomePage();
+            
             homePageObj.GoToTMPage(driver);
         }
 
@@ -34,23 +38,20 @@ namespace October2023.Tests
         public void CreateTime_Test()
         {
             // TM Page object initialization and definition
-            TMPage tmPageObject = new TMPage();
+            
             tmPageObject.Create_TimeRecord(driver);
         }
-
+        
         [Test, Order (2), Description ("This test is editing an existing Time record")]
         public void EditTime_Test()
         {
-            TMPage tmPageObject = new TMPage();
-            // Edit TM
-            tmPageObject.Edit_TimeRecord(driver);
+
+            tmPageObject.Edit_TimeRecord(driver, "anything", "two", "three");
         }
 
         [Test, Order (3), Description ("This test is deleting an existing Time record")]
         public void DeleteTime_Test() 
         {
-            TMPage tmPageObject = new TMPage();
-            // Delete TM
             tmPageObject.Delete_TimeRecord(driver);
         }
 
